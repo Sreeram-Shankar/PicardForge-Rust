@@ -26,7 +26,8 @@ where
     yout[0] = y0.to_vec();
     
     for k in 0..nsteps {
-        step_rk1(&f, tgrid[k], &yout[k], h, n, &mut yout[k+1]);
+        let y_k = yout[k].clone();
+        step_rk1(&f, tgrid[k], &y_k, h, n, &mut yout[k+1]);
     }
 }
 
@@ -61,7 +62,8 @@ where
     yout[0] = y0.to_vec();
     
     for k in 0..nsteps {
-        step_rk2(&f, tgrid[k], &yout[k], h, n, &mut yout[k+1]);
+        let y_k = yout[k].clone();
+        step_rk2(&f, tgrid[k], &y_k, h, n, &mut yout[k+1]);
     }
 }
 
@@ -99,7 +101,8 @@ where
     yout[0] = y0.to_vec();
     
     for k in 0..nsteps {
-        step_rk3(&f, tgrid[k], &yout[k], h, n, &mut yout[k+1]);
+        let y_k = yout[k].clone();
+        step_rk3(&f, tgrid[k], &y_k, h, n, &mut yout[k+1]);
     }
 }
 
@@ -140,7 +143,8 @@ where
     yout[0] = y0.to_vec();
     
     for k in 0..nsteps {
-        step_rk4(&f, tgrid[k], &yout[k], h, n, &mut yout[k+1]);
+        let y_k = yout[k].clone();
+        step_rk4(&f, tgrid[k], &y_k, h, n, &mut yout[k+1]);
     }
 }
 
@@ -187,6 +191,7 @@ where
     yout[0] = y0.to_vec();
     
     for k in 0..nsteps {
-        step_rk5(&f, tgrid[k], &yout[k], h, n, &mut yout[k+1]);
+        let y_k = yout[k].clone();
+        step_rk5(&f, tgrid[k], &y_k, h, n, &mut yout[k+1]);
     }
 }
