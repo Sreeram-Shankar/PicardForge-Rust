@@ -28,13 +28,14 @@ where
     
     //uses RK2 for first step
     f(tgrid[0], &yout[0], &mut k1);
-    let mut y_temp: Vec<f64> = (0..n).map(|i| yout[0][i] + h * k1[i]).collect();
+    let y_temp: Vec<f64> = (0..n).map(|i| yout[0][i] + h * k1[i]).collect();
     f(tgrid[0] + h, &y_temp, &mut k2);
     yout[1] = (0..n).map(|i| yout[0][i] + 0.5 * h * (k1[i] + k2[i])).collect();
     f(tgrid[1], &yout[1], &mut f_vals[1]);
     
     for k in 1..nsteps {
-        step_ab2(&yout[k], &f_vals[k], &f_vals[k-1], h, n, &mut yout[k+1]);
+        let y_k = yout[k].clone();
+        step_ab2(&y_k, &f_vals[k], &f_vals[k-1], h, n, &mut yout[k+1]);
         f(tgrid[k+1], &yout[k+1], &mut f_vals[k+1]);
     }
 }
@@ -87,7 +88,8 @@ where
     f(tgrid[2], &yout[2], &mut f_vals[2]);
     
     for k in 2..nsteps {
-        step_ab3(&yout[k], &f_vals[k], &f_vals[k-1], &f_vals[k-2], h, n, &mut yout[k+1]);
+        let y_k = yout[k].clone();
+        step_ab3(&y_k, &f_vals[k], &f_vals[k-1], &f_vals[k-2], h, n, &mut yout[k+1]);
         f(tgrid[k+1], &yout[k+1], &mut f_vals[k+1]);
     }
 }
@@ -138,7 +140,8 @@ where
     }
     
     for k in 3..nsteps {
-        step_ab4(&yout[k], &f_vals[k], &f_vals[k-1], &f_vals[k-2], &f_vals[k-3], h, n, &mut yout[k+1]);
+        let y_k = yout[k].clone();
+        step_ab4(&y_k, &f_vals[k], &f_vals[k-1], &f_vals[k-2], &f_vals[k-3], h, n, &mut yout[k+1]);
         f(tgrid[k+1], &yout[k+1], &mut f_vals[k+1]);
     }
 }
@@ -190,7 +193,8 @@ where
     }
     
     for k in 4..nsteps {
-        step_ab5(&yout[k], &f_vals[k], &f_vals[k-1], &f_vals[k-2], &f_vals[k-3], &f_vals[k-4], h, n, &mut yout[k+1]);
+        let y_k = yout[k].clone();
+        step_ab5(&y_k, &f_vals[k], &f_vals[k-1], &f_vals[k-2], &f_vals[k-3], &f_vals[k-4], h, n, &mut yout[k+1]);
         f(tgrid[k+1], &yout[k+1], &mut f_vals[k+1]);
     }
 }
